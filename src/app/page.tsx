@@ -1,6 +1,8 @@
+import NasaCircle from '@/components/NasaCircle';
+
 export default function Home() {
   return (
-    <main>
+    <main style={{ width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
       {/* Header/Navigation */}
       <header className="nasa-header" style={{ 
         padding: '0.5rem 1rem', 
@@ -9,7 +11,8 @@ export default function Home() {
         justifyContent: 'space-between',
         position: 'sticky',
         top: 0,
-        zIndex: 10
+        zIndex: 10,
+        width: '100%'
       }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ marginRight: '1rem' }}>
@@ -56,11 +59,18 @@ export default function Home() {
       }}></div>
 
       {/* Main Content */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem', position: 'relative', zIndex: 1 }}>
+      <div style={{ 
+        width: '95%', 
+        maxWidth: '1800px', 
+        margin: '0 auto', 
+        padding: '2rem 0', 
+        position: 'relative', 
+        zIndex: 1 
+      }}>
         <h1 style={{ 
           fontSize: '3rem', 
           fontWeight: 300, 
-          margin: '0 0 2rem 0',
+          margin: '0 0 2rem 1rem',
           textShadow: '0 0 15px rgba(255, 255, 255, 0.5)'
         }}>The Red Planet</h1>
         
@@ -87,9 +97,11 @@ export default function Home() {
           {/* Main Content Area */}
           <div className="main-content">
             {/* Weather Widget */}
-            <div className="nasa-circle" style={{ borderColor: '#4a8baa', backgroundColor: 'rgba(26, 42, 53, 0.7)' }}>
-              <div className="nasa-circle-title" style={{ color: '#4a8baa' }}>DATA</div>
-              
+            <NasaCircle 
+              title="DATA" 
+              color="#4a8baa" 
+              backgroundColor="rgba(26, 42, 53, 0.7)"
+            >
               <h3 style={{ color: '#4a8baa', marginBottom: '1rem', textShadow: '0 0 8px rgba(74, 139, 170, 0.5)' }}>TODAY'S WEATHER (°F)</h3>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', width: '100%' }}>
@@ -104,17 +116,14 @@ export default function Home() {
               </div>
               
               <div style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#a0a0a0' }}>Sol 3039 - MSL</div>
-              
-              <div className="nasa-circle-controls">
-                <button style={{ color: '#4a8baa' }}>◀</button>
-                <button style={{ color: '#4a8baa' }}>▶</button>
-              </div>
-            </div>
+            </NasaCircle>
             
             {/* Recent Images Widget */}
-            <div className="nasa-circle" style={{ borderColor: '#c75b5b', backgroundColor: 'rgba(42, 21, 21, 0.7)' }}>
-              <div className="nasa-circle-title" style={{ color: '#c75b5b' }}>RECENT IMAGES</div>
-              
+            <NasaCircle 
+              title="RECENT IMAGES" 
+              color="#c75b5b" 
+              backgroundColor="rgba(42, 21, 21, 0.7)"
+            >
               <div style={{ width: '100%', height: '75%', borderRadius: '0.5rem', overflow: 'hidden' }}>
                 <div 
                   style={{ 
@@ -133,17 +142,14 @@ export default function Home() {
                   <p style={{ fontSize: '0.875rem', textShadow: '0 0 5px rgba(255, 255, 255, 0.5)' }}>Mars surface captured by Perseverance rover</p>
                 </div>
               </div>
-              
-              <div className="nasa-circle-controls">
-                <button style={{ color: '#c75b5b' }}>◀</button>
-                <button style={{ color: '#c75b5b' }}>▶</button>
-              </div>
-            </div>
+            </NasaCircle>
             
             {/* Distance Comparison Widget */}
-            <div className="nasa-circle" style={{ borderColor: '#d9a45b', backgroundColor: 'rgba(42, 30, 21, 0.7)' }}>
-              <div className="nasa-circle-title" style={{ color: '#d9a45b' }}>COMPARE</div>
-              
+            <NasaCircle 
+              title="COMPARE" 
+              color="#d9a45b" 
+              backgroundColor="rgba(42, 30, 21, 0.7)"
+            >
               <h3 style={{ color: '#d9a45b', marginBottom: '1rem', textShadow: '0 0 8px rgba(217, 164, 91, 0.5)' }}>DISTANCE FROM SUN</h3>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', width: '100%' }}>
@@ -158,29 +164,21 @@ export default function Home() {
               </div>
               
               <div style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#a0a0a0' }}>millions of miles avg.</div>
-              
-              <div className="nasa-circle-controls">
-                <button style={{ color: '#d9a45b' }}>◀</button>
-                <button style={{ color: '#d9a45b' }}>▶</button>
-              </div>
-            </div>
+            </NasaCircle>
             
             {/* Latest Findings Widget */}
-            <div className="nasa-circle" style={{ borderColor: '#c75b5b', backgroundColor: 'rgba(42, 21, 21, 0.7)' }}>
-              <div className="nasa-circle-title" style={{ color: '#c75b5b' }}>LATEST FINDINGS</div>
-              
+            <NasaCircle 
+              title="LATEST FINDINGS" 
+              color="#c75b5b" 
+              backgroundColor="rgba(42, 21, 21, 0.7)"
+            >
               <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>November 18, 2021</div>
                 <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
                   NASA's Perseverance Captures Challenging Flight by Mars Helicopter
                 </h3>
               </div>
-              
-              <div className="nasa-circle-controls">
-                <button style={{ color: '#c75b5b' }}>◀</button>
-                <button style={{ color: '#c75b5b' }}>▶</button>
-              </div>
-            </div>
+            </NasaCircle>
           </div>
         </div>
       </div>
