@@ -1,6 +1,16 @@
+'use client';
+
 import NasaCircle from '@/components/NasaCircle';
+import Sidebar from '@/components/Sidebar';
+import { useState } from 'react';
 
 export default function Home() {
+  const [activeItem, setActiveItem] = useState('DASHBOARD');
+
+  const handleSidebarItemClick = (item: string) => {
+    setActiveItem(item);
+  };
+
   return (
     <main style={{ width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
       {/* Header/Navigation */}
@@ -76,23 +86,10 @@ export default function Home() {
         
         <div className="content-grid">
           {/* Left Navigation */}
-          <div className="sidebar">
-            <nav style={{ display: 'flex', flexDirection: 'column' }}>
-              {['DASHBOARD', 'SCIENCE GOALS', 'THE PLANET', 'ATMOSPHERE', 'ASTROBIOLOGY', 'PAST, PRESENT, FUTURE, TIMELINE'].map((item) => (
-                <a 
-                  key={item} 
-                  href="#" 
-                  className="nasa-nav-item"
-                  style={{ 
-                    borderLeftColor: item === 'DASHBOARD' ? '#ff6b6b' : 'transparent',
-                    backgroundColor: item === 'DASHBOARD' ? 'rgba(139, 62, 62, 0.7)' : 'rgba(0, 0, 0, 0.2)'
-                  }}
-                >
-                  {item}
-                </a>
-              ))}
-            </nav>
-          </div>
+          <Sidebar 
+            activeItem={activeItem} 
+            onItemClick={handleSidebarItemClick} 
+          />
           
           {/* Main Content Area */}
           <div className="main-content">
@@ -176,6 +173,46 @@ export default function Home() {
                 <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>November 18, 2021</div>
                 <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
                   NASA's Perseverance Captures Challenging Flight by Mars Helicopter
+                </h3>
+              </div>
+            </NasaCircle>
+            
+            {/* Additional Content for Scrolling Test */}
+            <NasaCircle 
+              title="MISSION UPDATES" 
+              color="#4a8baa" 
+              backgroundColor="rgba(26, 42, 53, 0.7)"
+            >
+              <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>December 5, 2021</div>
+                <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
+                  Perseverance Rover Discovers Ancient Lake Deposits
+                </h3>
+              </div>
+            </NasaCircle>
+            
+            <NasaCircle 
+              title="RESEARCH" 
+              color="#d9a45b" 
+              backgroundColor="rgba(42, 30, 21, 0.7)"
+            >
+              <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>January 12, 2022</div>
+                <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
+                  New Study Reveals Potential for Ancient Microbial Life
+                </h3>
+              </div>
+            </NasaCircle>
+            
+            <NasaCircle 
+              title="TECHNOLOGY" 
+              color="#c75b5b" 
+              backgroundColor="rgba(42, 21, 21, 0.7)"
+            >
+              <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>February 28, 2022</div>
+                <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
+                  New Rover Instruments Detect Organic Compounds
                 </h3>
               </div>
             </NasaCircle>
