@@ -1,15 +1,11 @@
 'use client';
 
-import NasaCircle from '@/components/NasaCircle';
 import Sidebar from '@/components/Sidebar';
-import { useState } from 'react';
+import { useNavigation } from '@/hooks/useNavigation';
+import PageContent from '@/components/PageContent';
 
 export default function Home() {
-  const [activeItem, setActiveItem] = useState('DASHBOARD');
-
-  const handleSidebarItemClick = (item: string) => {
-    setActiveItem(item);
-  };
+  const { activeItem, handleItemClick, navItems } = useNavigation();
 
   return (
     <main style={{ width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
@@ -87,136 +83,13 @@ export default function Home() {
         <div className="content-grid">
           {/* Left Navigation */}
           <Sidebar 
+            items={navItems}
             activeItem={activeItem} 
-            onItemClick={handleSidebarItemClick} 
+            onItemClick={handleItemClick} 
           />
           
-          {/* Main Content Area */}
-          <div className="main-content">
-            {/* Weather Widget */}
-            <NasaCircle 
-              title="DATA" 
-              color="#4a8baa" 
-              backgroundColor="rgba(26, 42, 53, 0.7)"
-            >
-              <h3 style={{ color: '#4a8baa', marginBottom: '1rem', textShadow: '0 0 8px rgba(74, 139, 170, 0.5)' }}>TODAY'S WEATHER (°F)</h3>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', width: '100%' }}>
-                <div>
-                  <div style={{ fontSize: '2.25rem', fontWeight: 700, textShadow: '0 0 10px rgba(255, 255, 255, 0.5)' }}>-4°</div>
-                  <div style={{ color: '#a0a0a0' }}>high</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '2.25rem', fontWeight: 700, textShadow: '0 0 10px rgba(255, 255, 255, 0.5)' }}>-98°</div>
-                  <div style={{ color: '#a0a0a0' }}>low</div>
-                </div>
-              </div>
-              
-              <div style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#a0a0a0' }}>Sol 3039 - MSL</div>
-            </NasaCircle>
-            
-            {/* Recent Images Widget */}
-            <NasaCircle 
-              title="RECENT IMAGES" 
-              color="#c75b5b" 
-              backgroundColor="rgba(42, 21, 21, 0.7)"
-            >
-              <div style={{ width: '100%', height: '75%', borderRadius: '0.5rem', overflow: 'hidden' }}>
-                <div 
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    backgroundColor: 'rgba(139, 62, 62, 0.5)', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    textAlign: 'center', 
-                    padding: '1rem',
-                    backdropFilter: 'blur(3px)',
-                    boxShadow: 'inset 0 0 15px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  <p style={{ fontSize: '0.875rem', textShadow: '0 0 5px rgba(255, 255, 255, 0.5)' }}>Mars surface captured by Perseverance rover</p>
-                </div>
-              </div>
-            </NasaCircle>
-            
-            {/* Distance Comparison Widget */}
-            <NasaCircle 
-              title="COMPARE" 
-              color="#d9a45b" 
-              backgroundColor="rgba(42, 30, 21, 0.7)"
-            >
-              <h3 style={{ color: '#d9a45b', marginBottom: '1rem', textShadow: '0 0 8px rgba(217, 164, 91, 0.5)' }}>DISTANCE FROM SUN</h3>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', width: '100%' }}>
-                <div>
-                  <div style={{ fontSize: '1.125rem', color: '#d9a45b' }}>MARS</div>
-                  <div style={{ fontSize: '2.25rem', fontWeight: 700, textShadow: '0 0 10px rgba(255, 255, 255, 0.5)' }}>142</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '1.125rem', color: '#4a8baa' }}>EARTH</div>
-                  <div style={{ fontSize: '2.25rem', fontWeight: 700, color: '#4a8baa', textShadow: '0 0 10px rgba(74, 139, 170, 0.5)' }}>93</div>
-                </div>
-              </div>
-              
-              <div style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#a0a0a0' }}>millions of miles avg.</div>
-            </NasaCircle>
-            
-            {/* Latest Findings Widget */}
-            <NasaCircle 
-              title="LATEST FINDINGS" 
-              color="#c75b5b" 
-              backgroundColor="rgba(42, 21, 21, 0.7)"
-            >
-              <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>November 18, 2021</div>
-                <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
-                  NASA's Perseverance Captures Challenging Flight by Mars Helicopter
-                </h3>
-              </div>
-            </NasaCircle>
-            
-            {/* Additional Content for Scrolling Test */}
-            <NasaCircle 
-              title="MISSION UPDATES" 
-              color="#4a8baa" 
-              backgroundColor="rgba(26, 42, 53, 0.7)"
-            >
-              <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>December 5, 2021</div>
-                <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
-                  Perseverance Rover Discovers Ancient Lake Deposits
-                </h3>
-              </div>
-            </NasaCircle>
-            
-            <NasaCircle 
-              title="RESEARCH" 
-              color="#d9a45b" 
-              backgroundColor="rgba(42, 30, 21, 0.7)"
-            >
-              <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>January 12, 2022</div>
-                <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
-                  New Study Reveals Potential for Ancient Microbial Life
-                </h3>
-              </div>
-            </NasaCircle>
-            
-            <NasaCircle 
-              title="TECHNOLOGY" 
-              color="#c75b5b" 
-              backgroundColor="rgba(42, 21, 21, 0.7)"
-            >
-              <div style={{ width: '100%', height: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ color: '#a0a0a0', marginBottom: '1rem' }}>February 28, 2022</div>
-                <h3 style={{ fontSize: '1.25rem', textAlign: 'center', padding: '0 1rem', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>
-                  New Rover Instruments Detect Organic Compounds
-                </h3>
-              </div>
-            </NasaCircle>
-          </div>
+          {/* Main Content Area - Now using PageContent component */}
+          <PageContent activeItem={activeItem} />
         </div>
       </div>
     </main>

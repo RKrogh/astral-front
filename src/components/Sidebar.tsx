@@ -1,21 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
+import { DEFAULT_NAV_ITEMS, NavigationItem } from '@/hooks/useNavigation';
 
 interface SidebarProps {
-  items?: string[];
-  activeItem?: string;
-  onItemClick?: (item: string) => void;
+  items?: NavigationItem[];
+  activeItem?: NavigationItem;
+  onItemClick?: (item: NavigationItem) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
-  items = ['DASHBOARD', 'SCIENCE GOALS', 'THE PLANET', 'ATMOSPHERE', 'ASTROBIOLOGY', 'PAST, PRESENT, FUTURE, TIMELINE'],
+  items = DEFAULT_NAV_ITEMS,
   activeItem = 'DASHBOARD',
   onItemClick
 }) => {
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<NavigationItem | null>(null);
 
-  const handleItemClick = (item: string) => {
+  const handleItemClick = (item: NavigationItem) => {
     if (onItemClick) {
       onItemClick(item);
     }
