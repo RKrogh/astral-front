@@ -13,6 +13,19 @@ const ThePlanet: React.FC = () => {
         
         <div style={{ fontSize: '0.95rem', lineHeight: '1.5' }}>
           <p>Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, being larger than only Mercury. In the English language, Mars is named for the Roman god of war.</p>
+          
+          {/* Additional content that will be more visible in the expanded modal */}
+          <p style={{ marginTop: '1rem' }}>
+            Mars has a thin atmosphere made mostly of carbon dioxide, nitrogen, and argon. It has surface features such as impact craters, valleys, dunes, and polar ice caps. Mars has two small, irregularly shaped moons, Phobos and Deimos.
+          </p>
+          
+          <p style={{ marginTop: '1rem' }}>
+            The days and seasons are similar to Earth's, as is the tilt of its rotational axis. Mars is a terrestrial planet with a surface that consists of minerals containing silicon and oxygen, metals, and other elements that typically make up rock.
+          </p>
+          
+          <p style={{ marginTop: '1rem' }}>
+            The red-orange appearance of Mars' surface is caused by iron(III) oxide, more commonly known as hematite or rust. This composition has given rise to Mars being known as the "Red Planet."
+          </p>
         </div>
       </NasaCircle>
       

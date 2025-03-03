@@ -8,6 +8,8 @@
   --glow-red: rgba(255, 107, 107, 0.5);
   --glow-blue: rgba(74, 139, 170, 0.5);
   --glow-gold: rgba(217, 164, 91, 0.5);
+  --yellow-tint: rgba(255, 255, 0, 0.9);
+  --yellow-tint-transparent: rgba(255, 255, 0, 0.5);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -77,6 +79,41 @@ body::before {
   }
 }
 
+/* Animation for the distortion effect */
+@keyframes flicker {
+  0% {
+    opacity: 0.9;
+    filter: sepia(0.4) hue-rotate(20deg);
+  }
+  25% {
+    opacity: 0.8;
+    filter: sepia(0.5) hue-rotate(30deg);
+  }
+  50% {
+    opacity: 0.95;
+    filter: sepia(0.3) hue-rotate(25deg);
+  }
+  75% {
+    opacity: 0.85;
+    filter: sepia(0.45) hue-rotate(35deg);
+  }
+  100% {
+    opacity: 0.9;
+    filter: sepia(0.4) hue-rotate(20deg);
+  }
+}
+
+@keyframes expandFromCenter {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
 /* Grid Layout */
 .content-grid {
   display: grid;
@@ -140,7 +177,13 @@ body::before {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   background-color: rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s, box-shadow 0.3s;
+  /* Faster transition back to normal after distortion */
+  transition: transform 0.25s ease-out, 
+              filter 0.25s ease-out, 
+              opacity 0.25s ease-out,
+              background-color 0.25s ease-out,
+              border-color 0.25s ease-out,
+              box-shadow 0.2s;
 }
 
 .nasa-circle:hover {
@@ -148,19 +191,20 @@ body::before {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }
 
+/* Remove constant animations and only use glow colors */
 .nasa-circle[style*="borderColor: '#4a8baa'"] {
   --glow-color: rgba(74, 139, 170, 0.5);
-  animation: pulse 4s infinite;
+  box-shadow: 0 0 15px var(--glow-color);
 }
 
 .nasa-circle[style*="borderColor: '#c75b5b'"] {
   --glow-color: rgba(255, 107, 107, 0.5);
-  animation: pulse 4s infinite;
+  box-shadow: 0 0 15px var(--glow-color);
 }
 
 .nasa-circle[style*="borderColor: '#d9a45b'"] {
   --glow-color: rgba(217, 164, 91, 0.5);
-  animation: pulse 4s infinite;
+  box-shadow: 0 0 15px var(--glow-color);
 }
 
 .nasa-circle-title {
@@ -232,6 +276,61 @@ body::before {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Special class for when distortion is active */
+.nasa-circle.distorting {
+  transition: none; /* Remove transition during distortion for more glitchy effect */
+  animation: flicker 0.15s ease-in-out infinite alternate;
+  box-shadow: 0 4px 25px var(--yellow-tint-transparent);
+}
+
+/* Add a glitch effect to the title during distortion */
+.distorting .nasa-circle-title {
+  animation: textGlitch 0.15s ease-in-out infinite alternate;
+  text-shadow: 
+    2px 0 0 var(--yellow-tint-transparent),
+    -2px 0 0 var(--yellow-tint-transparent);
+}
+
+/* Add yellow tint to content during distortion */
+.content-yellowing {
+  transition: color 0.25s ease-out, text-shadow 0.25s ease-out;
+}
+
+.distorting .content-yellowing {
+  color: var(--yellow-tint);
+  text-shadow: 0 0 8px var(--yellow-tint-transparent);
+}
+
+.distorting .content-yellowing h3,
+.distorting .content-yellowing p,
+.distorting .content-yellowing div {
+  color: var(--yellow-tint) !important;
+  text-shadow: 0 0 8px var(--yellow-tint-transparent);
+}
+
+@keyframes textGlitch {
+  0% {
+    transform: translateX(-2px);
+    color: var(--yellow-tint);
+  }
+  25% {
+    transform: translateX(0px);
+    color: var(--yellow-tint-transparent);
+  }
+  50% {
+    transform: translateX(2px);
+    color: var(--yellow-tint);
+  }
+  75% {
+    transform: translateX(-1px);
+    color: var(--yellow-tint-transparent);
+  }
+  100% {
+    transform: translateX(1px);
+    color: var(--yellow-tint);
+  }
+}
+
 /* Media queries for responsive design */
 @media (max-width: 1024px) {
   .content-grid {
@@ -271,4 +370,24 @@ body::before {
   .nasa-circle-controls {
     bottom: 0.75rem;
   }
+}
+
+/* Expandable NASA Circle */
+.expandable-nasa-circle {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease-out;
+}
+
+.expandable-nasa-circle:hover {
+  transform: scale(1.02);
+}
+
+.expandable-nasa-circle .nasa-circle {
+  pointer-events: none; /* This ensures the click event goes to the parent */
+}
+
+/* Ensure controls within the circle still work */
+.expandable-nasa-circle .nasa-circle-controls {
+  pointer-events: auto;
 }
