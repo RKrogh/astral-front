@@ -1,12 +1,19 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const roboto = Roboto({ 
+  weight: ['300', '400', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'Clean Next.js App',
-  description: 'A clean Next.js application with TypeScript and Tailwind CSS',
+  title: 'NASA Mars Exploration Program',
+  description: 'The NASA Mars Exploration Program is a science-driven program that seeks to understand whether Mars was, is, or can be, a habitable world.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body style={{ fontFamily: roboto.style.fontFamily }}>{children}</body>
     </html>
   );
 }
