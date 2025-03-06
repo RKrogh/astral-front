@@ -1,8 +1,8 @@
 :root {
   /* Light theme variables */
   --light-foreground-rgb: 255, 255, 255;
-  --light-background-start-rgb: 42, 11, 11;
-  --light-background-end-rgb:  0, 0, 0;
+  --light-background-start-rgb: 92, 28, 28;
+  --light-background-end-rgb: 44, 14, 14;
   --light-nasa-red: 199, 91, 91;
   --light-nasa-blue: 74, 139, 170;
   --light-nasa-gold: 217, 164, 91;
@@ -14,8 +14,8 @@
 
   /* Dark theme variables */
   --dark-foreground-rgb: 255, 255, 255;
-  --dark-background-start-rgb: 92, 28, 28;
-  --dark-background-end-rgb: 44, 14, 14;
+  --dark-background-start-rgb: 42, 11, 11;
+  --dark-background-end-rgb: 0, 0, 0;
   --dark-nasa-red: 199, 91, 91;
   --dark-nasa-blue: 74, 139, 170;
   --dark-nasa-gold: 217, 164, 91;
@@ -33,7 +33,7 @@
   --background-end-rgb: var(--light-background-end-rgb);
   --nasa-red: var(--light-nasa-red);
   --nasa-blue: var(--light-nasa-blue);
-  --nasa-gold: var(--light-nasa-gold);
+  --nasa-gold: var(--light-glow-gold);
   --glow-red: var(--light-glow-red);
   --glow-blue: var(--light-glow-blue);
   --glow-gold: var(--light-glow-gold);
@@ -56,7 +56,7 @@
   --yellow-tint-transparent: var(--dark-yellow-tint-transparent);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-rgb: 0, 0, 0;
@@ -443,28 +443,40 @@ body::before {
 
 /* Update NASA Circle styles for light theme */
 .light .nasa-circle {
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .light .nasa-circle:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }
 
 /* Update NASA Nav Item styles for light theme */
 .light .nasa-nav-item {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(0, 0, 0, 0.2);
   color: rgb(var(--light-foreground-rgb));
 }
 
 .light .nasa-nav-item:hover {
-  background-color: rgba(199, 91, 91, 0.1);
+  background-color: rgba(92, 28, 28, 0.7);
   border-left-color: rgb(var(--light-nasa-red));
   box-shadow: 0 0 10px var(--light-glow-red);
 }
 
 /* Update NASA Header styles for light theme */
 .light .nasa-header {
-  background-color: rgba(49, 13, 13, 0.9);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: rgba(60, 20, 20, 0.8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Update NASA Header styles for dark theme */
+.dark .nasa-header {
+  background-color: rgba(42, 11, 11, 0.9);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Krogh background color change in light mode */
+.light .krogh-background {
+  filter: blur(5px) brightness(0) saturate(100%) invert(31%) sepia(98%) saturate(1234%) hue-rotate(327deg) brightness(87%) contrast(89%);
 }
