@@ -50,6 +50,22 @@ export default function Home() {
           animation: 'float 20s ease-in-out infinite'
         }}></div>
 
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          right: '-5%',
+          width: '80%',
+          height: '80%',
+          backgroundImage: 'url("/krogh.svg")',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.15,
+          zIndex: 0,
+          filter: 'blur(5px)',
+          transform: 'translateY(-50%)',
+          animation: 'float 20s ease-in-out infinite'
+        }} className="krogh-background"></div>
+
         {/* Main Content */}
         <div style={{ 
           width: '95%', 
