@@ -1,16 +1,17 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import { ThemeProvider } from "@/hooks/ThemeContext";
 
 const roboto = Roboto({ 
-  weight: ['300', '400', '700'],
+  weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'NASA Mars Exploration Program',
-  description: 'The NASA Mars Exploration Program is a science-driven program that seeks to understand whether Mars was, is, or can be, a habitable world.',
+  title: 'The Red Planet',
+  description: 'Explore Mars with NASA\'s latest data and images',
   icons: {
     icon: '/favicon.ico',
   },
@@ -23,7 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ fontFamily: roboto.style.fontFamily }}>{children}</body>
+      <body style={{ fontFamily: roboto.style.fontFamily }}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
