@@ -43,7 +43,7 @@ export default function RootLayout({
       <body style={{ 
         fontFamily: roboto.style.fontFamily,
         backgroundColor: 'rgb(42, 11, 11)', // Default dark theme background
-      }}>
+      }} suppressHydrationWarning>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
