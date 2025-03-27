@@ -1,7 +1,8 @@
 'use client';
 
-import React, { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState, useRef, useEffect } from 'react';
 import { useNavigationContext } from '@/hooks/NavigationContext';
+import CircularMenu from './CircularMenu';
 
 interface NasaCircleProps {
   title: string;
@@ -18,6 +19,8 @@ interface NasaCircleProps {
   connectorOffset?: number; // Allows for branching connections
   // Color inheritance props
   parentColor?: string; // Color to inherit/transition from
+  enableCircularMenu?: boolean;
+  circularMenuItems?: any[];
 }
 
 const NasaCircle: React.FC<NasaCircleProps> = ({
@@ -33,9 +36,16 @@ const NasaCircle: React.FC<NasaCircleProps> = ({
   showBottomConnector = false,
   connectorOffset = 0,
   parentColor,
+  enableCircularMenu = false,
+  circularMenuItems = [],
 }) => {
   const { isChanging } = useNavigationContext();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showCircularMenu, setShowCircularMenu] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+  const circleRef = useRef<HTMLDivElement>(null);
+  const longPressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isLongPressing, setIsLongPressing] = useState(false);
 
   // Use inherited color if no specific color is provided
   const effectiveColor = color || parentColor;
@@ -49,6 +59,99 @@ const NasaCircle: React.FC<NasaCircleProps> = ({
   const handleModalClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
+
+  // Handle right-click for circular menu
+  const handleContextMenu = (e: React.MouseEvent) => {
+    if (!enableCircularMenu) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Get the position of the circle
+    if (circleRef.current) {
+      const rect = circleRef.current.getBoundingClientRect();
+      // Center the menu on the circle
+      setMenuPosition({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      });
+    }
+    
+    // Toggle the circular menu
+    setShowCircularMenu(!showCircularMenu);
+  };
+
+  // Handle long press for mobile devices
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!enableCircularMenu) return;
+    
+    setIsLongPressing(true);
+    
+    // Start a timer for long press
+    longPressTimeoutRef.current = setTimeout(() => {
+      // Get the position of the circle
+      if (circleRef.current) {
+        const rect = circleRef.current.getBoundingClientRect();
+        // Center the menu on the circle
+        setMenuPosition({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2
+        });
+      }
+      
+      // Open the circular menu
+      setShowCircularMenu(true);
+    }, 500); // 500ms for long press
+  };
+
+  const handleTouchEnd = () => {
+    if (!enableCircularMenu) return;
+    
+    setIsLongPressing(false);
+    
+    // Clear the timeout if touch ends before long press is triggered
+    if (longPressTimeoutRef.current) {
+      clearTimeout(longPressTimeoutRef.current);
+      longPressTimeoutRef.current = null;
+    }
+  };
+
+  const handleTouchMove = () => {
+    if (!enableCircularMenu) return;
+    
+    // Clear the timeout if user moves finger before long press is triggered
+    if (longPressTimeoutRef.current && isLongPressing) {
+      clearTimeout(longPressTimeoutRef.current);
+      longPressTimeoutRef.current = null;
+      setIsLongPressing(false);
+    }
+  };
+
+  // Close circular menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (showCircularMenu && circleRef.current && !circleRef.current.contains(e.target as Node)) {
+        setShowCircularMenu(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('contextmenu', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('contextmenu', handleClickOutside);
+    };
+  }, [showCircularMenu]);
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (longPressTimeoutRef.current) {
+        clearTimeout(longPressTimeoutRef.current);
+      }
+    };
+  }, []);
   
   // Generate random distortion values when navigation changes
   const distortionEffects = useMemo(() => {
@@ -90,6 +193,32 @@ const NasaCircle: React.FC<NasaCircleProps> = ({
     return color;
   };
 
+  // Update menu position on scroll
+  useEffect(() => {
+    if (!enableCircularMenu || !showCircularMenu) return;
+    
+    const handleScroll = () => {
+      if (circleRef.current) {
+        const rect = circleRef.current.getBoundingClientRect();
+        setMenuPosition({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2
+        });
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    
+    // Initial position update
+    handleScroll();
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [enableCircularMenu, showCircularMenu]);
+
   return (
     <div style={{ 
       position: 'relative',
@@ -122,6 +251,11 @@ const NasaCircle: React.FC<NasaCircleProps> = ({
 
       <div 
         onClick={handleClick}
+        onContextMenu={handleContextMenu}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
+        ref={circleRef}
         style={{ 
           cursor: expandable ? 'pointer' : 'default',
           transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
@@ -183,6 +317,16 @@ const NasaCircle: React.FC<NasaCircleProps> = ({
           )}
         </div>
       </div>
+
+      {/* Circular Menu */}
+      {enableCircularMenu && (
+        <CircularMenu
+          items={circularMenuItems}
+          isOpen={showCircularMenu}
+          onClose={() => setShowCircularMenu(false)}
+          position={menuPosition}
+        />
+      )}
 
       {expandable && isExpanded && (
         <>

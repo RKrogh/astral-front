@@ -1,5 +1,6 @@
 import NasaCircle from '@/components/NasaCircle';
 import InteractiveNasaCircle from '@/components/InteractiveNasaCircle';
+import MissionComputerMenu from '@/components/MissionComputerMenu';
 
 export default function ExamplesPage() {
   // Example data for the interactive component
@@ -28,7 +29,7 @@ export default function ExamplesPage() {
   const imageData = [
     {
       id: 1,
-      description: 'Mars surface captured by Perseverance rover'
+      description: 'Mars surface captured by Perseverance rover (2022)'
     },
     {
       id: 2,
@@ -138,6 +139,12 @@ export default function ExamplesPage() {
               <p style={{ marginTop: '1rem' }}>Click the arrows below to trigger the alerts.</p>
             </div>
           </NasaCircle>
+        </div>
+
+        {/* Sci-Fi Mission Computer Menu */}
+        <div>
+          <h2 style={{ marginBottom: '1rem' }}>Sci-Fi Circular Menu</h2>
+          <MissionComputerMenu />
         </div>
       </div>
     </main>

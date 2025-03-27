@@ -1,7 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import NasaCircle from './NasaCircle';
+
+interface CircularMenuItem {
+  icon: ReactNode;
+  label: string;
+  onClick: () => void;
+}
 
 interface InteractiveNasaCircleProps {
   title: string;
@@ -10,6 +16,14 @@ interface InteractiveNasaCircleProps {
   children?: React.ReactNode;
   data?: any[];
   renderItem?: (item: any) => React.ReactNode;
+  // Circular menu props
+  enableCircularMenu?: boolean;
+  circularMenuItems?: CircularMenuItem[];
+  // Metro-line connection props
+  showTopConnector?: boolean;
+  showBottomConnector?: boolean;
+  connectorOffset?: number;
+  parentColor?: string;
 }
 
 const InteractiveNasaCircle: React.FC<InteractiveNasaCircleProps> = ({
@@ -19,6 +33,12 @@ const InteractiveNasaCircle: React.FC<InteractiveNasaCircleProps> = ({
   children,
   data = [],
   renderItem,
+  enableCircularMenu = false,
+  circularMenuItems = [],
+  showTopConnector = false,
+  showBottomConnector = false,
+  connectorOffset = 0,
+  parentColor,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -48,6 +68,12 @@ const InteractiveNasaCircle: React.FC<InteractiveNasaCircleProps> = ({
       onPrevious={data.length > 1 ? handlePrevious : undefined}
       onNext={data.length > 1 ? handleNext : undefined}
       showControls={data.length > 1}
+      showTopConnector={showTopConnector}
+      showBottomConnector={showBottomConnector}
+      connectorOffset={connectorOffset}
+      parentColor={parentColor}
+      enableCircularMenu={enableCircularMenu}
+      circularMenuItems={circularMenuItems}
     >
       {content}
     </NasaCircle>

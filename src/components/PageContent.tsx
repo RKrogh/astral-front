@@ -6,6 +6,7 @@ import ThePlanet from './pages/ThePlanet';
 import Atmosphere from './pages/Atmosphere';
 import Astrobiology from './pages/Astrobiology';
 import Timeline from './pages/Timeline';
+import Examples from './pages/Examples';
 
 interface PageContentProps {
   activeItem: NavigationItem;
@@ -26,6 +27,8 @@ const PageContent: React.FC<PageContentProps> = ({ activeItem }) => {
       return <Astrobiology />;
     case 'PAST, PRESENT, FUTURE, TIMELINE':
       return <Timeline />;
+    case 'EXAMPLES':
+      return <Examples />;
     default:
       return <Dashboard />;
   }

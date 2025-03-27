@@ -6,7 +6,8 @@ export type NavigationItem =
   | 'THE PLANET' 
   | 'ATMOSPHERE' 
   | 'ASTROBIOLOGY' 
-  | 'PAST, PRESENT, FUTURE, TIMELINE';
+  | 'PAST, PRESENT, FUTURE, TIMELINE'
+  | 'EXAMPLES';
 
 export const DEFAULT_NAV_ITEMS: NavigationItem[] = [
   'DASHBOARD', 
@@ -14,7 +15,8 @@ export const DEFAULT_NAV_ITEMS: NavigationItem[] = [
   'THE PLANET', 
   'ATMOSPHERE', 
   'ASTROBIOLOGY', 
-  'PAST, PRESENT, FUTURE, TIMELINE'
+  'PAST, PRESENT, FUTURE, TIMELINE',
+  'EXAMPLES',
 ];
 
 export const useNavigation = (initialItem: NavigationItem = 'DASHBOARD') => {
